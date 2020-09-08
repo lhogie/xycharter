@@ -1,1 +1,1 @@
-# xycharter
+# oscilloscup
