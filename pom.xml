@@ -51,9 +51,9 @@
 		</developer>
 	</developers>
 	<scm>
-		<connection>scm:git:git@github.com:lhogie/toools.git</connection>
-		<developerConnection>scm:git:git@github.com:lhogie/toools.git</developerConnection>
-		<url>https://github.com/lhogie/toools</url>
+		<connection>scm:git:git@github.com:lhogie/xycharter.git</connection>
+		<developerConnection>scm:git:git@github.com:lhogie/xycharter.git</developerConnection>
+		<url>https://github.com/lhogie/xycharter</url>
 		<tag>HEAD</tag>
 	</scm>
 	<dependencies>
