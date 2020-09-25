@@ -47,34 +47,33 @@ public class FigureLegend extends Legend
 	private Color borderLineColor = null;
 	private Color backgroundColor = null;
 
-	public void draw(Graphics2D g, Space space, Figure figure)
+	public void draw(Graphics2D g, Space space, Plot plot)
 	{
 		if (isVisible())
 		{
 			int iconWidth = 10;
 			Vector glyphVectors = new Vector();
 
-			if (figure.getNbPoints() == 0 && figure.getNbFigures() > 1)
+			if (plot.getNbFigures() > 1)
 			{
 				int legendGraphicsWidth = 0;
 				int legendGraphicsHeight = 0;
 
-				for (int i = 0; i < figure.getNbFigures(); ++i)
+				for (Figure f : plot.figures())
 				{
-					Figure subFigure = figure.getFigureAt(i);
-
-					if (subFigure.getNbFigures() == 0
-							&& subFigure.rendererList.size() == 1)
+					if (f.rendererList.size() == 1)
 					{
 						Font font = new Font(null, Font.PLAIN, 16);
 						FontRenderContext frc = g.getFontRenderContext();
 						GlyphVector gv = font.createGlyphVector(frc,
-								subFigure.name == null ? "" : subFigure.name.trim());
-						glyphVectors.add(new Object[] { gv, subFigure.getColor() });
+								f.name == null ? "" : f.name.trim());
+						glyphVectors.add(new Object[] { gv, f.getColor() });
 						legendGraphicsHeight += font.getSize() + lineSpacingInPixel;
 						int textWith = gv.getVisualBounds().getBounds().getSize().width;
-						if (legendGraphicsWidth < textWith)
+						
+						if (legendGraphicsWidth < textWith) {
 							legendGraphicsWidth = textWith;
+						}
 					}
 				}
 

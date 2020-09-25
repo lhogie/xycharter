@@ -75,10 +75,6 @@ public class FilePlotter
 		{
 			return new PNGPlotter().plot(p, width, height);
 		}
-		else if (fileExt.equals("eps"))
-		{
-			return new EPSPlotter().plot(p, width, height);
-		}
 		else
 		{
 			throw new IllegalArgumentException("file extension not registered");

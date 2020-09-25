@@ -68,7 +68,6 @@ public class Figure extends GraphicalElement {
 	private DoubleList x = new DoubleArrayList();
 	private DoubleList y = new DoubleArrayList();
 
-	private final List<Figure> children = new ArrayList<Figure>();
 	public String name;
 
 	public final List<FigureRenderer> rendererList = new ArrayList<>();
@@ -78,45 +77,9 @@ public class Figure extends GraphicalElement {
 		setColor(Color.blue);
 	}
 
-	/*
-	 * Recursive search. Ex: a/b/c
-	 */
-	public Figure getByName(String name) {
-		int pos = name.indexOf('/');
-
-		if (pos == - 1) {
-			for (Figure f : children) {
-				if (f.name.equals(name)) {
-					return f;
-				}
-			}
-
-			return null;
-		}
-		else {
-			String childName = name.substring(0, pos);
-			Figure child = getByName(childName);
-
-			if (child == null) {
-				return null;
-			}
-			else {
-				return child.getByName(name.substring(pos + 1));
-			}
-		}
-	}
 
 	public void draw(Space space) {
 		rendererList.forEach(r -> r.draw(this, space));
-		children.forEach(f -> f.draw(space));
-	}
-
-	/**
-	 * Recursively adds a renderer to the figure and its subfigure.
-	 */
-	public void addRendererRecursively(FigureRenderer r) {
-		rendererList.add(r);
-		children.forEach(f -> f.addRendererRecursively(r));
 	}
 
 	/**
@@ -133,14 +96,12 @@ public class Figure extends GraphicalElement {
 	public double y(int index) {
 		return y.getDouble(index);
 	}
-	
-	public static class Point
-	{
+
+	public static class Point {
 		public double x, y;
 	}
-	
-	public void xy(Point p, int index)
-	{
+
+	public void xy(Point p, int index) {
 		p.x = x(index);
 		p.y = y(index);
 	}
@@ -179,65 +140,6 @@ public class Figure extends GraphicalElement {
 		}
 	}
 
-	/**
-	 * Inserts the given figure at the given position.
-	 */
-	public void insertFigure(Figure figure, int position) {
-		if (figure == null)
-			throw new IllegalArgumentException("null figure");
-
-		children.add(position, figure);
-		listeners.forEach(l -> l.figureInserted(this, position));
-	}
-
-	/**
-	 * Append the given figure to this figure.
-	 * 
-	 * @param figure
-	 */
-	public void addFigure(Figure figure) {
-		insertFigure(figure, getNbFigures());
-	}
-
-	/**
-	 * Removes the figure at the given position.
-	 * 
-	 * @param i
-	 * @return Point
-	 */
-	public Figure removeFigureAt(int i) {
-		Figure child = children.remove(i);
-		listeners.forEach(l -> l.figureRemoved(this, child, i));
-		return child;
-	}
-
-	/**
-	 * Remove all the figures that figure contain.
-	 */
-	public void removeAllFigures() {
-		while (getNbFigures() > 0) {
-			removeFigureAt(getNbFigures() - 1);
-		}
-	}
-
-	/**
-	 * Gets the figure at the given index.
-	 * 
-	 * @param index
-	 * @return Figure
-	 */
-	public Figure getFigureAt(int index) {
-		return children.get(index);
-	}
-
-	/**
-	 * Gets the number of subfigure in this figure.
-	 * 
-	 * @return int
-	 */
-	public int getNbFigures() {
-		return children.size();
-	}
 
 	/**
 	 * Gets the extremums of the figure.
@@ -246,11 +148,11 @@ public class Figure extends GraphicalElement {
 	 */
 	public Extremi computeExtremums() {
 		Extremi extrems = new Extremi();
-		fillExtrems(extrems);
+		updateExtrems(extrems);
 		return extrems;
 	}
 
-	private void fillExtrems(Extremi extrems) {
+	public void updateExtrems(Extremi extrems) {
 		int nbPoints = getNbPoints();
 
 		for (int i = 0; i < nbPoints; ++i) {
@@ -260,8 +162,7 @@ public class Figure extends GraphicalElement {
 			if (extrems.nbPoints == 0) {
 				extrems.minX = extrems.maxX = x;
 				extrems.minY = extrems.maxY = y;
-			}
-			else {
+			} else {
 				extrems.minX = Math.min(extrems.minX, x);
 				extrems.minY = Math.min(extrems.minY, y);
 				extrems.maxX = Math.max(extrems.maxX, x);
@@ -270,8 +171,6 @@ public class Figure extends GraphicalElement {
 
 			++extrems.nbPoints;
 		}
-
-		children.forEach(f -> f.fillExtrems(extrems));
 	}
 
 	@Override
@@ -279,7 +178,6 @@ public class Figure extends GraphicalElement {
 		Figure clone = new Figure();
 		clone.x.addAll(x);
 		clone.y.addAll(y);
-		children.forEach(c -> clone.children.add(c.clone()));
 		clone.rendererList.addAll(new ArrayList<>(rendererList));
 		clone.listeners.addAll(new ArrayList<>(listeners));
 		return clone;
@@ -290,8 +188,6 @@ public class Figure extends GraphicalElement {
 			x.set(i, x.getDouble(i) + xs);
 			y.set(i, y.getDouble(i) + ys);
 		}
-
-		children.forEach(f -> f.translate(xs, ys));
 	}
 
 	@Override
@@ -306,8 +202,7 @@ public class Figure extends GraphicalElement {
 
 		@Override
 		public String toString() {
-			return "Extremi [minX=" + minX + ", minY=" + minY + ", maxX=" + maxX
-					+ ", maxY=" + maxY + "]";
+			return "Extremi [minX=" + minX + ", minY=" + minY + ", maxX=" + maxX + ", maxY=" + maxY + "]";
 		}
 
 		public Object clone() {
@@ -318,18 +213,6 @@ public class Figure extends GraphicalElement {
 			clone.maxY = maxY;
 			return clone;
 		}
-	}
-
-	public List<Figure> findAllFiguresRecursively() {
-		List<Figure> list = new ArrayList<Figure>();
-		list.add(this);
-
-		// the list grows all along the looping
-		for (int i = 0; i < list.size(); ++i) {
-			list.addAll(list.get(i).children);
-		}
-
-		return list;
 	}
 
 	public void retainsOnlyLastPoints(int n) {
@@ -391,7 +274,7 @@ public class Figure extends GraphicalElement {
 	}
 
 	public int getClosestPoint(double x, double y) {
-		int closestPoint = - 1;
+		int closestPoint = -1;
 		double distance = Integer.MAX_VALUE;
 
 		for (int i = 0; i < getNbPoints(); ++i) {
@@ -412,7 +295,7 @@ public class Figure extends GraphicalElement {
 
 	public void display() {
 		Plot p = new Plot();
-		p.setFigure(this);
+		p.addFigure(this);
 		p.display();
 	}
 

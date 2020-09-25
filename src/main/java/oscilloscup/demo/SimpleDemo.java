@@ -45,7 +45,7 @@ public class SimpleDemo
 		f.addPoint(3, 4);
 		f.addRenderer(new ConnectedLineFigureRenderer());
 
-		plotter.getPlot().setFigure(f);
+		plotter.getPlot().addFigure(f);
 
 		JFrame frame = new JFrame();
 		frame.setContentPane(plotter);

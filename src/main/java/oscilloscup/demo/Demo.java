@@ -69,7 +69,7 @@ public class Demo {
 	private static Component createTimedModel() {
 		SwingPlotter plotter = new SwingPlotter();
 		Figure figure = new Figure();
-		plotter.getPlot().setFigure(figure);
+		plotter.getPlot().addFigure(figure);
 
 		AtomicInteger t = new AtomicInteger();
 		Threads.newThread_loop_periodic(100, () -> true, () -> {
@@ -101,7 +101,7 @@ public class Demo {
 		SwingPlotter plotter = new SwingPlotter();
 
 		// link the figure to the component
-		plotter.getPlot().setFigure(figure);
+		plotter.getPlot().addFigure(figure);
 
 		Space space = plotter.getPlot().getSpace();
 
@@ -155,9 +155,8 @@ public class Demo {
 		});
 
 		Figure fl = new Figure();
-		fl.addFigure(figure);
 
-		plotter.getPlot().setFigure(fl);
+		plotter.getPlot().addFigure(fl);
 		Space space = plotter.getPlot().getSpace();
 		space.setBackgroundColor(Color.orange);
 
@@ -187,7 +186,7 @@ public class Demo {
 		figure.addPoint(0, 0);
 		figure.rendererList.add(new ConnectedLineFigureRenderer());
 		figure.rendererList.add(new CirclePointRenderer(i -> 5));
-		plotter.getPlot().setFigure(figure);
+		plotter.getPlot().addFigure(figure);
 
 		// not using the image buffer make the display a lot faster, obviously
 		plotter.setImageBufferedUsed(false);
@@ -214,7 +213,7 @@ public class Demo {
 		figure.addRenderer(new ConnectedLineFigureRenderer());
 
 		SwingPlotter plotter = new SwingPlotter();
-		plotter.getPlot().setFigure(figure);
+		plotter.getPlot().addFigure(figure);
 
 		Space space = plotter.getPlot().getSpace();
 		space.getLegend().setText("x = t cos(t) ; y = sin(t)");
@@ -247,13 +246,11 @@ public class Demo {
 		aff1.setColor(Color.blue);
 		aff1.addRenderer(new CirclePointRenderer(i -> 5));
 
-		Figure figureList = new Figure();
-		figureList.addFigure(fig1);
-		figureList.addFigure(fig2);
-		figureList.addFigure(aff1);
 
 		SwingPlotter plotter = new SwingPlotter();
-		plotter.getPlot().setFigure(figureList);
+		plotter.getPlot().addFigure(fig1);
+		plotter.getPlot().addFigure(fig2);
+		plotter.getPlot().addFigure(aff1);
 		Space space = plotter.getPlot().getSpace();
 		space.setMode(Space.MODE.PHYSICS);
 		space.getLegend().setVisible(false);
@@ -271,7 +268,7 @@ public class Demo {
 		figure.addRenderer(new ConnectedLineFigureRenderer());
 
 		SwingPlotter plotter = new SwingPlotter();
-		plotter.getPlot().setFigure(figure);
+		plotter.getPlot().addFigure(figure);
 		Space space = plotter.getPlot().getSpace();
 		space.getLegend().setText("Special graduation");
 		space.getXDimension().getLegend().setVisible(false);
@@ -337,7 +334,7 @@ public class Demo {
 		SwingPlotter plotter = new SwingPlotter();
 		final Figure figure = new Figure();
 		figure.addPoint(4, 2);
-		plotter.getPlot().setFigure(figure);
+		plotter.getPlot().addFigure(figure);
 		plotter.getPlot().getSpace().getXDimension().getOriginAxis().setVisible(false);
 		plotter.getPlot().getSpace().getYDimension().getOriginAxis().setVisible(false);
 
@@ -353,7 +350,7 @@ public class Demo {
 	}
 
 	private static SwingPlotter createLegendModel() {
-		Figure figureList = new Figure();
+		SwingPlotter plotter = new SwingPlotter();
 
 		{
 			ParametricFunction function = d -> new Point(d, Math.cos(d));
@@ -362,7 +359,7 @@ public class Demo {
 			FigureRenderer figureRenderer = new ConnectedLineFigureRenderer();
 			figure.setColor(Color.blue);
 			figure.addRenderer(figureRenderer);
-			figureList.addFigure(figure);
+			plotter.getPlot().addFigure(figure);
 		}
 
 		{
@@ -372,7 +369,7 @@ public class Demo {
 			FigureRenderer figureRenderer = new ConnectedLineFigureRenderer();
 			figure.setColor(Color.red);
 			figure.addRenderer(figureRenderer);
-			figureList.addFigure(figure);
+			plotter.getPlot().addFigure(figure);
 		}
 
 		{
@@ -382,11 +379,9 @@ public class Demo {
 			FigureRenderer figureRenderer = new ConnectedLineFigureRenderer();
 			figure.setColor(Color.green);
 			figure.addRenderer(figureRenderer);
-			figureList.addFigure(figure);
+			plotter.getPlot().addFigure(figure);
 		}
 
-		SwingPlotter plotter = new SwingPlotter();
-		plotter.getPlot().setFigure(figureList);
 		Space space = plotter.getPlot().getSpace();
 		space.getXDimension().getLowerBoundAxis().setVisible(false);
 		space.getXDimension().getUpperBoundAxis().setVisible(false);

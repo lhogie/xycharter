@@ -25,41 +25,21 @@ Luc Hogie (CNRS, I3S laboratory, University of Nice-Sophia Antipolis)
 
 */
 
-package oscilloscup;
+package oscilloscup.multiscup;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.awt.Color;
 
-import org.jibble.epsgraphics.EpsGraphics2D;
+import oscilloscup.Figure;
+import oscilloscup.Space.MODE;
+import oscilloscup.SwingPlotter;
 
-/**
- * The user may want to get an image object or the data of an image file (PNG,
- * JPEG, SVG...) for, for instance, return it to a HTTP-client that will have to
- * draw the image on the web page it will show.
- * 
- * @author Luc Hogie
- */
-public class EPSPlotter extends Plot2Bytes
+class PanePlotter extends SwingPlotter
 {
-	@Override
-	public byte[] plot(Plot plot, int width, int height)
+	PanePlotter()
 	{
-		try
-		{
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			EpsGraphics2D g = new EpsGraphics2D(null, outputStream, 0, 0, width, height);
-			g.setClip(0, 0, width, height);
-			plot.draw(g);
-			g.flush();
-			g.close();
-			outputStream.close();
-			return outputStream.toByteArray();
-		}
-		catch (IOException ex)
-		{
-			ex.printStackTrace();
-			throw new IllegalStateException("bug");
-		}
+		setSize(getPreferredSize());
+		getPlot().getSpace().setMode(MODE.PHYSICS);
+		getPlot().getSpace().setBackgroundColor(Color.white);
+		getPlot().getSpace().setColor(Color.black);
 	}
-
 }
