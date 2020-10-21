@@ -6,7 +6,10 @@
 
 	<groupId>io.github.lhogie</groupId>
 	<artifactId>xycharter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
+	<name>XYCharter</name>
+	<description>A Java charting library for the two-dimensional rendering of numerical data</description>
+	<url>https://github.com/lhogie/xycharter</url>
 
 	<build>
 		<plugins>
@@ -71,6 +74,7 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>5.7.0</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
