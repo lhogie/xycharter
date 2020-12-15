@@ -30,6 +30,7 @@ package xycharter.render;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.io.Serializable;
 
 import xycharter.Figure;
 import xycharter.Space;
@@ -37,14 +38,12 @@ import xycharter.Space;
 /**
  * @author Luc Hogie
  */
-public abstract class FigureRenderer
-{
-	private Stroke stroke = new BasicStroke();
+public abstract class FigureRenderer implements Serializable {
+	transient private Stroke stroke = new BasicStroke();
 	private int xShift = 0;
 	private int yShift = 0;
 
-	public final void draw(Figure object, Space space)
-	{
+	public final void draw(Figure object, Space space) {
 		Graphics2D graphics = space.getFigureGraphics();
 		graphics.setColor(object.getColor());
 		graphics.setStroke(getStroke());
@@ -53,41 +52,34 @@ public abstract class FigureRenderer
 
 	protected abstract void drawImpl(Figure f, Space space);
 
-	public Stroke getStroke()
-	{
+	public Stroke getStroke() {
 		return stroke;
 	}
 
-	public void setStroke(Stroke stroke)
-	{
+	public void setStroke(Stroke stroke) {
 		this.stroke = stroke;
 	}
 
 	public abstract String getPublicName();
 
-	public int getXShift()
-	{
+	public int getXShift() {
 		return xShift;
 	}
 
-	public int getYShift()
-	{
+	public int getYShift() {
 		return yShift;
 	}
 
-	public void setXShift(int xShift)
-	{
+	public void setXShift(int xShift) {
 		this.xShift = xShift;
 	}
 
-	public void setYShift(int yShift)
-	{
+	public void setYShift(int yShift) {
 		this.yShift = yShift;
 	}
-	
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return getPublicName();
 	}
 }

@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.lhogie</groupId>
 	<artifactId>xycharter</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<name>XYCharter</name>
 	<description>A Java charting library for the two-dimensional rendering of numerical data</description>
 	<url>https://github.com/lhogie/xycharter</url>

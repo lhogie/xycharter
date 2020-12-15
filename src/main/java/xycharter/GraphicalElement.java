@@ -51,8 +51,7 @@ import java.io.Serializable;
  *         axis...)
  *         </p>
  */
-public class GraphicalElement implements Serializable
-{
+public class GraphicalElement implements Serializable {
 	private boolean visible = true;
 	private Color color = null;
 	private GraphicalElement parent = null;
@@ -61,33 +60,27 @@ public class GraphicalElement implements Serializable
 	 * @returns the parent graphical element of this object. May be null if this
 	 *          object is the root element of the tree (if it's a Space object).
 	 */
-	public GraphicalElement getParent()
-	{
+	public GraphicalElement getParent() {
 		return parent;
 	}
 
 	/**
 	 * Sets the parent for this GraphicalElement. It can be set to null.
 	 */
-	public void setParent(GraphicalElement parent)
-	{
+	public void setParent(GraphicalElement parent) {
 		this.parent = parent;
 	}
 
 	/**
 	 * Sets if the graphical element is visible or not. If the parent graphical
-	 * element is not visible, this object will not be visible: the visible
-	 * property is inherited.
+	 * element is not visible, this object will not be visible: the visible property
+	 * is inherited.
 	 */
-	public boolean isVisible()
-	{
+	public boolean isVisible() {
 		// if has an invisible parent
-		if (parent != null && ! parent.isVisible())
-		{
+		if (parent != null && !parent.isVisible()) {
 			return false;
-		}
-		else
-		{
+		} else {
 			return visible;
 		}
 	}
@@ -95,43 +88,34 @@ public class GraphicalElement implements Serializable
 	/**
 	 * Sets the visibility for this object.
 	 */
-	public void setVisible(boolean visible)
-	{
+	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 
 	/**
-	 * @return the color of the graphical element. If the color has never be
-	 *         set, the color of the parent graphical element is returned. If
-	 *         there is no parent, the default color is black. So, the returned
-	 *         color cannot be null. The color property is inherited.
+	 * @return the color of the graphical element. If the color has never be set,
+	 *         the color of the parent graphical element is returned. If there is no
+	 *         parent, the default color is black. So, the returned color cannot be
+	 *         null. The color property is inherited.
 	 */
-	public Color getColor()
-	{
-		if (color == null)
-		{
-			if (parent == null)
-			{
+	public Color getColor() {
+		if (color == null) {
+			if (parent == null) {
 				return Color.black;
-			}
-			else
-			{
+			} else {
 				return parent.getColor();
 			}
-		}
-		else
-		{
+		} else {
 			return color;
 		}
 	}
 
 	/**
-	 * Sets the color for this object. If it is set to null, the color of the
-	 * parent graphial element will be used. If there is no parent defined, the
-	 * color will be set to the default color black.
+	 * Sets the color for this object. If it is set to null, the color of the parent
+	 * graphial element will be used. If there is no parent defined, the color will
+	 * be set to the default color black.
 	 */
-	public void setColor(Color color)
-	{
+	public void setColor(Color color) {
 		this.color = color;
 	}
 }
