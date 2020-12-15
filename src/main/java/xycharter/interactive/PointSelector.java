@@ -51,8 +51,6 @@ public class PointSelector extends Selector {
 	protected void click(double x, double y) {
 		selection.clear();
 		ClosestPoint closestPoint = Figure.closestPoint(x, y, plotter.getPlot().figures());
-		System.out.println("closestPoint: " + closestPoint.figure.x(closestPoint.index) + ", "
-				+ closestPoint.figure.y(closestPoint.index));
 		OnFigureSelection s = new OnFigureSelection();
 		s.figure = closestPoint.figure;
 		s.pointIndices.add(closestPoint.index);
