@@ -59,8 +59,7 @@ import xycharter.Dimension.Orientation;
  * @author Luc Hogie.
  */
 
-public class Space extends GraphicalElement
-{
+public class Space extends GraphicalElement {
 	private Legend legend = new Legend("Ultimate Plotter");
 	private Dimension xDimension;
 	private Dimension yDimension;
@@ -68,15 +67,14 @@ public class Space extends GraphicalElement
 	private Graphics2D figureGraphics;
 
 	/*
-	 * the imageObserver is the object that will render the image on its pane.
-	 * it can be a SwingPlotter
+	 * the imageObserver is the object that will render the image on its pane. it
+	 * can be a SwingPlotter
 	 */
 	private ImageObserver imageObserver;
 
 	private Color backgroundColor = Color.white;
 
-	public Space()
-	{
+	public Space() {
 		Dimension xDimension = new Dimension(Orientation.X);
 		setXDimension(xDimension);
 
@@ -95,8 +93,7 @@ public class Space extends GraphicalElement
 	 * 
 	 * @param xDimension
 	 */
-	public void setXDimension(Dimension xDimension)
-	{
+	public void setXDimension(Dimension xDimension) {
 		if (xDimension == null)
 			throw new IllegalArgumentException("X dimension cannot be set to null");
 
@@ -109,8 +106,7 @@ public class Space extends GraphicalElement
 	 * 
 	 * @return Dimension
 	 */
-	public Dimension getXDimension()
-	{
+	public Dimension getXDimension() {
 		return xDimension;
 	}
 
@@ -119,8 +115,7 @@ public class Space extends GraphicalElement
 	 * 
 	 * @param yDimension
 	 */
-	public void setYDimension(Dimension yDimension)
-	{
+	public void setYDimension(Dimension yDimension) {
 		if (yDimension == null)
 			throw new IllegalArgumentException("Y dimension cannot be set to null");
 
@@ -133,20 +128,17 @@ public class Space extends GraphicalElement
 	 * 
 	 * @return Dimension
 	 */
-	public Dimension getYDimension()
-	{
+	public Dimension getYDimension() {
 		return yDimension;
 	}
 
 	/**
 	 * Gets the origin point (the point with (0, 0) coordinates) of the space.
-	 * Obviously, the real position (on the Graphics2D) of this point is not (0,
-	 * 0).
+	 * Obviously, the real position (on the Graphics2D) of this point is not (0, 0).
 	 * 
 	 * @return Point2D
 	 */
-	public Point2D getOriginPoint()
-	{
+	public Point2D getOriginPoint() {
 		return originPoint;
 	}
 
@@ -154,8 +146,8 @@ public class Space extends GraphicalElement
 	 * Sets the range of the space. This is a facility method: this can be done
 	 * directly manipulating the dimensions of the space.
 	 * 
-	 * Warning! This is a convenience method. The Dimension, Graduation and
-	 * AxisLine classes allow you to have a better control.
+	 * Warning! This is a convenience method. The Dimension, Graduation and AxisLine
+	 * classes allow you to have a better control.
 	 * 
 	 * @param xmin
 	 * @param xmax
@@ -164,8 +156,7 @@ public class Space extends GraphicalElement
 	 * @param ymax
 	 * @param ystep
 	 */
-	public void setRange(double xmin, double xmax, double ymin, double ymax)
-	{
+	public void setRange(double xmin, double xmax, double ymin, double ymax) {
 		xDimension.setMin(xmin, true);
 		xDimension.setMax(xmax, true);
 		yDimension.setMin(ymin, true);
@@ -175,19 +166,17 @@ public class Space extends GraphicalElement
 	/**
 	 * Sets the visibility of the grid.
 	 * 
-	 * Warning! This is a facade method. The grid class feature many methods
-	 * that allow a better control.
+	 * Warning! This is a facade method. The grid class feature many methods that
+	 * allow a better control.
 	 * 
 	 * @param gridTracing
 	 */
-	public void setGridVisible(boolean gridTracing)
-	{
+	public void setGridVisible(boolean gridTracing) {
 		getXDimension().getGrid().setVisible(gridTracing);
 		getYDimension().getGrid().setVisible(gridTracing);
 	}
 
-	public void setArrowsVisible(boolean b)
-	{
+	public void setArrowsVisible(boolean b) {
 		getXDimension().getLowerBoundAxis().getLine().getArrow().setVisible(b);
 		getXDimension().getOriginAxis().getLine().getArrow().setVisible(b);
 		getXDimension().getUpperBoundAxis().getLine().getArrow().setVisible(b);
@@ -196,18 +185,15 @@ public class Space extends GraphicalElement
 		getYDimension().getUpperBoundAxis().getLine().getArrow().setVisible(b);
 	}
 
-	public enum MODE
-	{
+	public enum MODE {
 		MATHS, PHYSICS
 	}
 
-	public void setMode(MODE mode)
-	{
+	public void setMode(MODE mode) {
 		getXDimension().getLegend().setFont(new Font(null, Font.PLAIN, 12));
 		getYDimension().getLegend().setFont(new Font(null, Font.PLAIN, 12));
 
-		if (mode == MODE.MATHS)
-		{
+		if (mode == MODE.MATHS) {
 			setBackgroundColor(Color.white);
 			setColor(Color.black);
 
@@ -218,9 +204,7 @@ public class Space extends GraphicalElement
 			getYDimension().getLowerBoundAxis().setVisible(false);
 			getYDimension().getOriginAxis().setVisible(true);
 			getYDimension().getUpperBoundAxis().setVisible(false);
-		}
-		else if (mode == MODE.PHYSICS)
-		{
+		} else if (mode == MODE.PHYSICS) {
 			setBackgroundColor(Color.black);
 			setColor(Color.white);
 
@@ -239,10 +223,8 @@ public class Space extends GraphicalElement
 		}
 	}
 
-	public void draw(Graphics2D spaceGraphics, Graphics2D figureGraphics)
-	{
-		if (isVisible())
-		{
+	public void draw(Graphics2D spaceGraphics, Graphics2D figureGraphics) {
+		if (isVisible()) {
 			// the first thing to do is to initialize the graduations and draw
 			// the grids
 
@@ -260,29 +242,24 @@ public class Space extends GraphicalElement
 	 * 
 	 * @return ImageObserver
 	 */
-	public ImageObserver getImageObserver()
-	{
+	public ImageObserver getImageObserver() {
 		return imageObserver;
 	}
 
 	/**
 	 * Sets the imageObserver.
 	 * 
-	 * @param imageObserver
-	 *            The imageObserver to set
+	 * @param imageObserver The imageObserver to set
 	 */
-	public void setImageObserver(ImageObserver imageObserver)
-	{
+	public void setImageObserver(ImageObserver imageObserver) {
 		this.imageObserver = imageObserver;
 	}
 
-	public Legend getLegend()
-	{
+	public Legend getLegend() {
 		return legend;
 	}
 
-	public void setLegend(Legend newLegend)
-	{
+	public void setLegend(Legend newLegend) {
 		if (newLegend == null)
 			throw new IllegalArgumentException("the legend cannot be set to null");
 
@@ -295,42 +272,35 @@ public class Space extends GraphicalElement
 	 * 
 	 * @return Color
 	 */
-	public Color getBackgroundColor()
-	{
+	public Color getBackgroundColor() {
 		return backgroundColor;
 	}
 
 	/**
 	 * Sets the backgroundColor.
 	 * 
-	 * @param backgroundColor
-	 *            The backgroundColor to set
+	 * @param backgroundColor The backgroundColor to set
 	 */
-	public void setBackgroundColor(Color backgroundColor)
-	{
+	public void setBackgroundColor(Color backgroundColor) {
 		if (backgroundColor == null)
 			throw new IllegalArgumentException("backgroundColor cannot be set to null");
 
 		this.backgroundColor = backgroundColor;
 	}
 
-	public String toString()
-	{
+	public String toString() {
 		return "Space";
 	}
 
-	public Graphics2D getFigureGraphics()
-	{
+	public Graphics2D getFigureGraphics() {
 		return figureGraphics;
 	}
 
-	public void setFigureGraphics(Graphics2D graphics2D)
-	{
+	public void setFigureGraphics(Graphics2D graphics2D) {
 		figureGraphics = graphics2D;
 	}
 
-	public void setAutoBounds(boolean b)
-	{
+	public void setAutoBounds(boolean b) {
 		getXDimension().setAutoBounds(b);
 		getYDimension().setAutoBounds(b);
 	}

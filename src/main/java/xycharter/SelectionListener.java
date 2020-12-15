@@ -25,22 +25,17 @@ Luc Hogie (CNRS, I3S laboratory, University of Nice-Sophia Antipolis)
 
 */
 
+/*
+ * Created on Apr 30, 2004
+ */
 package xycharter;
 
-/**
- * The user may want to get an image object or the data of an image file (PNG,
- * JPEG, SVG...) for, for instance, return it to a HTTP-client that will have to
- * draw the image on the web page it will show.
- * 
- * @author Luc Hogie
- */
-public abstract class BitmapImageFilePlotter extends Plot2Bytes
-{
-	@Override
-	public byte[] plot(Plot p, int width, int height)
-	{			
-		return new AWTImagePlotter().createImageData(p, width, height, getType());
-	}
+import xycharter.interactive.InteractiveSwingPlotter;
+import xycharter.interactive.Selection;
 
-	public abstract String getType();
+/**
+ * @author luc.hogie
+ */
+public interface SelectionListener {
+	void pointsSelected(InteractiveSwingPlotter plotte, Selection selection);
 }

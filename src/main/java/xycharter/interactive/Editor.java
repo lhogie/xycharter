@@ -24,20 +24,45 @@ under the License.
 Luc Hogie (CNRS, I3S laboratory, University of Nice-Sophia Antipolis) 
 
 */
- 
- 
+
 /*
- * Created on Apr 30, 2004
+ * Created on Mar 23, 2004
+ *
+ * To change the template for this generated file go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-package xycharter;
+package xycharter.interactive;
 
-import java.util.Collection;
+import javax.swing.JPanel;
 
-
-/**
- * @author luc.hogie
- */
-public interface SPSelectionListener
+public class Editor<E> extends JPanel
 {
-	void pointsSelected(SwingPlotter sp, Collection points);
+	private ControlFrame ui;
+	private E object;
+
+	protected void updatePlotter()
+	{
+		ui.getPlotter().setUpdateNeeded(true);
+		ui.getPlotter().repaint();
+	}
+
+	public ControlFrame getUpUI()
+	{
+		return ui;
+	}
+
+	public void setUpUI(ControlFrame ui)
+	{
+		this.ui = ui;
+	}
+
+	public E getObject()
+	{
+		return object;
+	}
+
+	public void setObject(E object)
+	{
+		this.object = object;
+	}
 }

@@ -25,22 +25,36 @@ Luc Hogie (CNRS, I3S laboratory, University of Nice-Sophia Antipolis)
 
 */
 
-package xycharter;
+/*
+ * Created on Mar 23, 2004
+ *
+ * To change the template for this generated file go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+package xycharter.interactive;
+
+import javax.swing.JList;
+import javax.swing.JTextField;
+
+import xycharter.Figure;
+import xycharter.render.FigureRenderer;
 
 /**
- * The user may want to get an image object or the data of an image file (PNG,
- * JPEG, SVG...) for, for instance, return it to a HTTP-client that will have to
- * draw the image on the web page it will show.
- * 
- * @author Luc Hogie
+ * @author luc.hogie
+ *
+ *         To change the template for this generated type comment go to
+ *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public abstract class BitmapImageFilePlotter extends Plot2Bytes
-{
-	@Override
-	public byte[] plot(Plot p, int width, int height)
-	{			
-		return new AWTImagePlotter().createImageData(p, width, height, getType());
+public class FigureEditor extends Editor<Figure> {
+	private JList<Class<? extends FigureRenderer>> renderers = new JList<>();
+	private JTextField name = new JTextField();
+
+	public FigureEditor() {
+
 	}
 
-	public abstract String getType();
+	@Override
+	public String toString() {
+		return "Figure";
+	}
 }

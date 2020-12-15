@@ -29,13 +29,13 @@ package xycharter;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import it.unimi.dsi.fastutil.doubles.Double2DoubleFunction;
 import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import it.unimi.dsi.fastutil.doubles.DoubleArrays;
 import it.unimi.dsi.fastutil.doubles.DoubleList;
-import xycharter.render.ConnectedLineFigureRenderer;
 import xycharter.render.FigureRenderer;
 
 /**
@@ -273,24 +273,32 @@ public class Figure extends GraphicalElement {
 		rotate(i, newAngle - getAngle(i), 0, 0);
 	}
 
-	public int getClosestPoint(double x, double y) {
-		int closestPoint = -1;
+	public static class ClosestPoint{
+		public Figure figure;
+		public int index = -1;
+	}
+	
+	public static ClosestPoint closestPoint(double x, double y, Collection<Figure> figures) {
+		ClosestPoint r = new ClosestPoint();
 		double distance = Integer.MAX_VALUE;
 
-		for (int i = 0; i < getNbPoints(); ++i) {
-			double d = getDistance(i, x, y);
+		for (Figure f : figures) {
+			r.figure = f;
+			for (int i = 0; i < f.getNbPoints(); ++i) {
+				double d = f.getDistance(i, x, y);
 
-			if (d < distance) {
-				distance = d;
-				closestPoint = i;
+				if (d < distance) {
+					distance = d;
+					r.index = i;
+				}
 			}
 		}
 
-		return closestPoint;
+		return r;
 	}
 
 	public void setName(String s) {
-		this.name = name;
+		this.name = s;
 	}
 
 	public void display() {
@@ -315,6 +323,14 @@ public class Figure extends GraphicalElement {
 		}
 
 		return f;
+	}
+
+	public void addPoints(Figure f) {
+		int sz = f.getNbPoints();
+
+		for (int i = 0; i < sz; ++i) {
+			addPoint(f.x(i), f.y(i));
+		}
 	}
 
 }

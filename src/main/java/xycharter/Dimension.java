@@ -290,15 +290,14 @@ public class Dimension extends BoundedSpaceElement {
 	}
 
 	public double convertToDimensionCoordonateSystem(int a) {
-		double aa = a;
 		Space space = getParent();
 		double graphicsSize = getGraphicsSize(space.getFigureGraphics());
 
 		double range = getMax() - getMin();
 		double factor = graphicsSize / range;
-		double valueOnDimension = (int) (isX()
-				? (aa - space.getOriginPoint().getX()) / factor
-				: (aa - space.getOriginPoint().getY()) / - factor);
+		double valueOnDimension = (isX()
+				? (a - space.getOriginPoint().getX()) / factor
+				: (a - space.getOriginPoint().getY()) / - factor);
 
 		return valueOnDimension;
 	}

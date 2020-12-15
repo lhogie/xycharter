@@ -25,22 +25,35 @@ Luc Hogie (CNRS, I3S laboratory, University of Nice-Sophia Antipolis)
 
 */
 
-package xycharter;
+/*
+ * Created on Mar 23, 2004
+ *
+ * To change the template for this generated file go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+package xycharter.interactive;
+
+import java.awt.Stroke;
+
+import javax.swing.JComboBox;
+
+import xycharter.render.FigureRenderer;
 
 /**
- * The user may want to get an image object or the data of an image file (PNG,
- * JPEG, SVG...) for, for instance, return it to a HTTP-client that will have to
- * draw the image on the web page it will show.
- * 
- * @author Luc Hogie
+ * @author luc.hogie
+ *
+ *         To change the template for this generated type comment go to
+ *         Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public abstract class BitmapImageFilePlotter extends Plot2Bytes
-{
-	@Override
-	public byte[] plot(Plot p, int width, int height)
-	{			
-		return new AWTImagePlotter().createImageData(p, width, height, getType());
+public class RendererEditor extends Editor<FigureRenderer> {
+	private JComboBox<Stroke> stroke = new JComboBox<Stroke>();
+
+	public RendererEditor() {
+		// stroke.addItem(Stroke.);
 	}
 
-	public abstract String getType();
+	@Override
+	public String toString() {
+		return "Renderer";
+	}
 }

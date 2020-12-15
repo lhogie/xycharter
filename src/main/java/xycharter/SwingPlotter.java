@@ -64,8 +64,7 @@ import toools.thread.Threads;
  * @author Luc Hogie
  */
 
-public class SwingPlotter extends JComponent
-{
+public class SwingPlotter extends JComponent {
 	// the image used as buffer for fast repaints
 	private boolean redrawNeeded = true;
 	private boolean imageBufferedUsed = false;
@@ -75,8 +74,7 @@ public class SwingPlotter extends JComponent
 
 	private final List<SwingPlotterListener> listeners = new ArrayList<SwingPlotterListener>();
 
-	public SwingPlotter()
-	{
+	public SwingPlotter() {
 		plot.getSpace().setImageObserver(this);
 		plot.getSpace().setBackgroundColor(Color.white);
 		setDoubleBuffered(false);
@@ -84,21 +82,18 @@ public class SwingPlotter extends JComponent
 	}
 
 	@Override
-	public Dimension getPreferredSize()
-	{
+	public Dimension getPreferredSize() {
 		Space s = getPlot().getSpace();
-		int h = s.getLegend().getFont().getSize()
-				+ s.getXDimension().getLegend().getFont().getSize() + 800;
+		int h = s.getLegend().getFont().getSize() + s.getXDimension().getLegend().getFont().getSize() + 800;
 		int w = s.getYDimension().getLegend().getFont().getSize() + 800;
-		return new Dimension(w, h);	}
+		return new Dimension(w, h);
+	}
 
-	public Plot getPlot()
-	{
+	public Plot getPlot() {
 		return plot;
 	}
 
-	public void setGraphics2DPlotter(Plot p)
-	{
+	public void setGraphics2DPlotter(Plot p) {
 		if (p == null)
 			throw new IllegalArgumentException("painter set to null");
 
@@ -106,42 +101,34 @@ public class SwingPlotter extends JComponent
 	}
 
 	@Override
-	public void setForeground(Color fg)
-	{
+	public void setForeground(Color fg) {
 		plot.getSpace().setColor(fg);
 	}
 
 	@Override
-	public Color getForeground()
-	{
+	public Color getForeground() {
 		return plot.getSpace().getColor();
 	}
 
 	@Override
-	public void setBackground(Color bg)
-	{
+	public void setBackground(Color bg) {
 		plot.getSpace().setBackgroundColor(bg);
 	}
 
 	@Override
-	public Color getBackground()
-	{
+	public Color getBackground() {
 		return plot.getSpace().getBackgroundColor();
 	}
 
 	@Override
-	synchronized public void paint(Graphics g)
-	{
+	synchronized public void paint(Graphics g) {
 		java.awt.Dimension size = getSize();
 
-		if (g.getClipBounds().getSize().equals(size))
-		{
+		if (g.getClipBounds().getSize().equals(size)) {
 			listeners.forEach(l -> l.paintStarting(this));
 
-			if (isImageBufferedUsed())
-			{
-				if (isUpdateNeeded())
-				{
+			if (isImageBufferedUsed()) {
+				if (isUpdateNeeded()) {
 					setUpdateNeeded(false);
 					imageCache = createImage(size.width, size.height);
 					Graphics imageGraphics = imageCache.getGraphics();
@@ -150,48 +137,32 @@ public class SwingPlotter extends JComponent
 				}
 
 				g.drawImage(imageCache, 0, 0, Color.white, this);
-			}
-			else
-			{
+			} else {
 				drawOnGraphics(g);
 			}
 
 			listeners.forEach(l -> l.paintStarting(this));
-		}
-		else
-		{
+		} else {
 			repaint(0);
 		}
 	}
 
-	private void drawOnGraphics(Graphics g)
-	{
+	private void drawOnGraphics(Graphics g) {
 		plot.draw((Graphics2D) g);
 	}
 
-	public boolean isUpdateNeeded()
-	{
-		if (redrawNeeded)
-		{
+	public boolean isUpdateNeeded() {
+		if (redrawNeeded) {
 			return true;
-		}
-		else
-		{
+		} else {
 			// the first time, the image does not exist
-			if (imageCache == null)
-			{
+			if (imageCache == null) {
 				return true;
-			}
-			else
-			{
+			} else {
 				// if the size of the component has changed
-				if (imageCache.getHeight(this) != getSize().height
-						|| imageCache.getWidth(this) != getSize().width)
-				{
+				if (imageCache.getHeight(this) != getSize().height || imageCache.getWidth(this) != getSize().width) {
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 			}
@@ -199,65 +170,55 @@ public class SwingPlotter extends JComponent
 	}
 
 	/**
-	 * Sets if the component has to be updated. The update is needed if the data
-	 * has changed.
+	 * Sets if the component has to be updated. The update is needed if the data has
+	 * changed.
 	 * 
 	 * @param b
 	 */
-	public void setUpdateNeeded(boolean b)
-	{
+	public void setUpdateNeeded(boolean b) {
 		redrawNeeded = b;
 	}
 
 	/**
-	 * Gets if the image buffering is used. This allow very fast repaint. This
-	 * is useful if the component if moved, hidden, made visible very
-	 * frequently.
+	 * Gets if the image buffering is used. This allow very fast repaint. This is
+	 * useful if the component if moved, hidden, made visible very frequently.
 	 * 
 	 * @return boolean
 	 */
-	public boolean isImageBufferedUsed()
-	{
+	public boolean isImageBufferedUsed() {
 		return imageBufferedUsed;
 	}
 
 	/**
-	 * Sets if the image buffering is used. This allow very fast repaint. This
-	 * is useful if the component if moved, hidden, made visible very
-	 * frequently.
+	 * Sets if the image buffering is used. This allow very fast repaint. This is
+	 * useful if the component if moved, hidden, made visible very frequently.
 	 * 
-	 * @param imageBufferedUsed
-	 *            The imageBufferedUsed to set
+	 * @param imageBufferedUsed The imageBufferedUsed to set
 	 */
-	public void setImageBufferedUsed(boolean imageBufferedUsed)
-	{
+	public void setImageBufferedUsed(boolean imageBufferedUsed) {
 		this.imageBufferedUsed = imageBufferedUsed;
 	}
 
 	/**
-	 * Sets the task that is periodically invoked. The task is invoked and then
-	 * the repaint process is called.
+	 * Sets the task that is periodically invoked. The task is invoked and then the
+	 * repaint process is called.
 	 * 
 	 * @param cyclicTask
 	 */
-	public void refreshEveryMs(long milliseconds, BooleanSupplier whileCondition)
-	{
+	public void refreshEveryMs(long milliseconds, BooleanSupplier whileCondition) {
 		Threads.newThread_loop_periodic(milliseconds, whileCondition, () -> {
-			if (isVisible())
-			{
+			if (isVisible()) {
 				setUpdateNeeded(true);
 				repaint();
 			}
 		});
 	}
 
-	public Collection<SwingPlotterListener> getListeners()
-	{
+	public Collection<SwingPlotterListener> getListeners() {
 		return listeners;
 	}
 
-	public void setPlot(Plot p)
-	{
+	public void setPlot(Plot p) {
 		this.plot = p;
 	}
 }

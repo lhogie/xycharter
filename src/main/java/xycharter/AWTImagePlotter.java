@@ -47,7 +47,8 @@ public class AWTImagePlotter {
 	/**
 	 * Creates and image with the given dimension.
 	 */
-	public static Image getAWTImage(Plot p, int width, int height) {
+	public static Image getAWTImage(Plot p, int width, int height) {		
+
 		BufferedImage image = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics = (Graphics2D) image.getGraphics();
@@ -58,6 +59,8 @@ public class AWTImagePlotter {
 	}
 
 	public static byte[] createImageData(Plot p, int width, int height, String type) {
+
+
 		return createImageData((RenderedImage) getAWTImage(p, width, height), type);
 	}
 

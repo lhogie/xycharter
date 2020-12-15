@@ -41,6 +41,7 @@ import xycharter.Figure;
 import xycharter.GraduationStepProperties;
 import xycharter.Space;
 import xycharter.SwingPlotter;
+import xycharter.interactive.InteractiveSwingPlotter;
 import xycharter.render.CirclePointRenderer;
 import xycharter.render.ClosedNaturalCubicSplineFigureRenderer;
 import xycharter.render.ConnectedLineFigureRenderer;
@@ -67,7 +68,7 @@ public class Demo {
 	}
 
 	private static Component createTimedModel() {
-		SwingPlotter plotter = new SwingPlotter();
+		SwingPlotter plotter = new InteractiveSwingPlotter();
 		Figure figure = new Figure();
 		plotter.getPlot().addFigure(figure);
 
@@ -211,7 +212,7 @@ public class Demo {
 		Figure figure = function.toFigure(0, 2 * Math.PI, Math.PI / 100);
 		figure.addRenderer(new ConnectedLineFigureRenderer());
 
-		SwingPlotter plotter = new SwingPlotter();
+		SwingPlotter plotter = new InteractiveSwingPlotter();
 		plotter.getPlot().addFigure(figure);
 
 		Space space = plotter.getPlot().getSpace();

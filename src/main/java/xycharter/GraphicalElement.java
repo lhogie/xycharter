@@ -28,6 +28,7 @@ Luc Hogie (CNRS, I3S laboratory, University of Nice-Sophia Antipolis)
 package xycharter;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * @author Luc Hogie
@@ -50,7 +51,7 @@ import java.awt.Color;
  *         axis...)
  *         </p>
  */
-public class GraphicalElement
+public class GraphicalElement implements Serializable
 {
 	private boolean visible = true;
 	private Color color = null;
